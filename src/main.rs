@@ -1,5 +1,6 @@
 //#![windows_subsystem = "windows"]
 //Bevy 0.13.1を使用
+use bevy::audio::{PlaybackMode, Volume};
 use bevy::{diagnostic::FrameTimeDiagnosticsPlugin, prelude::*, window::*};
 use provatheus::*;
 mod dev;
@@ -37,9 +38,13 @@ fn main() {
             NatuyadePlugin,             //natuyadeプラグイン
         ))
         .add_systems(Startup, test_st)
+        .add_systems(Update, test_up)
         //以上は固定
         .run();
 }
+
+#[derive(Component)]
+struct Player;
 
 fn test_st(
     mut commands: Commands,
@@ -67,9 +72,9 @@ fn test_st(
 
     // camera
     commands.spawn((
+        Player,
         Camera3dBundle {
-            transform: Transform::from_xyz(16.0, 6.0, 16.0)
-                .looking_at(Vec3::new(0., 2., 0.), Vec3::Y),
+            transform: Transform::from_xyz(0.0, 4.0, 4.0),
             ..default()
         },
         FogSettings {
@@ -80,11 +85,46 @@ fn test_st(
             },
             ..default()
         },
+        SpatialListener {
+            left_ear_offset: Vec3::new(0.1, 0.0, 0.0),
+            right_ear_offset: Vec3::new(-0.1, 0.0, 0.0),
+        },
     ));
 
-    commands.spawn(SceneBundle {
-        transform: Transform::from_xyz(0.0, 0.0, 0.0),
-        scene: asset_server.load("models/denwa.glb#Scene0"),
-        ..default()
-    });
+    commands.spawn((
+        SceneBundle {
+            transform: Transform::from_xyz(0.0, 0.0, 0.0),
+            scene: asset_server.load("models/denwa.glb#Scene0"),
+            ..default()
+        },
+        AudioBundle {
+            source: asset_server.load("sounds/denwa.ogg"),
+            settings: PlaybackSettings {
+                volume: Volume::new(5.),
+                spatial: true,
+                mode: PlaybackMode::Loop,
+                ..default()
+            },
+        },
+    ));
+}
+
+fn test_up(
+    mut query: Query<&mut Transform, With<Player>>,
+    keyboard_input: Res<ButtonInput<KeyCode>>,
+) {
+    for mut transform in query.iter_mut() {
+        if keyboard_input.pressed(KeyCode::KeyW) {
+            transform.translation.z -= 0.05;
+        }
+        if keyboard_input.pressed(KeyCode::KeyS) {
+            transform.translation.z += 0.05;
+        }
+        if keyboard_input.pressed(KeyCode::KeyA) {
+            transform.translation.x -= 0.05;
+        }
+        if keyboard_input.pressed(KeyCode::KeyD) {
+            transform.translation.x += 0.05;
+        }
+    }
 }
