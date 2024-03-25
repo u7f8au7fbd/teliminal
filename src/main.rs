@@ -1,4 +1,5 @@
 //#![windows_subsystem = "windows"]
+//Bevy 0.13.1を使用
 use bevy::{diagnostic::FrameTimeDiagnosticsPlugin, prelude::*, window::*};
 use provatheus::*;
 mod dev;
@@ -35,6 +36,55 @@ fn main() {
             U7f8aU7fbdPlugin,           //u7f8au7fbdプラグイン
             NatuyadePlugin,             //natuyadeプラグイン
         ))
+        .add_systems(Startup, test_st)
         //以上は固定
         .run();
+}
+
+fn test_st(
+    mut commands: Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+    asset_server: Res<AssetServer>,
+) {
+    // plane
+    commands.spawn(PbrBundle {
+        mesh: meshes.add(Plane3d::default().mesh().size(128., 128.)),
+        material: materials.add(Color::rgb(0.6, 0.6, 0.6)),
+        ..default()
+    });
+
+    // light
+    commands.spawn(PointLightBundle {
+        transform: Transform::from_xyz(0.0, 8.0, 0.0),
+        point_light: PointLight {
+            shadows_enabled: true,
+            intensity: 200000.0,
+            ..default()
+        },
+        ..default()
+    });
+
+    // camera
+    commands.spawn((
+        Camera3dBundle {
+            transform: Transform::from_xyz(16.0, 6.0, 16.0)
+                .looking_at(Vec3::new(0., 2., 0.), Vec3::Y),
+            ..default()
+        },
+        FogSettings {
+            color: Color::rgba(0., 0., 0., 1.0),
+            falloff: FogFalloff::Linear {
+                start: 20.0,
+                end: 48.0,
+            },
+            ..default()
+        },
+    ));
+
+    commands.spawn(SceneBundle {
+        transform: Transform::from_xyz(0.0, 0.0, 0.0),
+        scene: asset_server.load("models/denwa.glb#Scene0"),
+        ..default()
+    });
 }
