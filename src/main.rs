@@ -11,7 +11,7 @@ fn main() {
             DefaultPlugins
                 .set(WindowPlugin {
                     primary_window: Some(Window {
-                        title: "Project Liminal".into(),    //タイトル
+                        title: "Telminal".into(),                                      //タイトル
                         resolution: (1280.0, 960.0).into(), //ウィンドウサイズ
                         position: WindowPosition::Centered(MonitorSelection::Primary), //ウィンドウの生成座標を中心に設定
                         present_mode: PresentMode::AutoNoVsync,                        //Vsync有効
