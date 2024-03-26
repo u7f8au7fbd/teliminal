@@ -17,7 +17,7 @@ pub struct StartupPlugin;
 impl Plugin for StartupPlugin {
     //スタートアップ時に実行されるプラグイン
     fn build(&self, app: &mut App) {
-        app.add_systems(Startup, startup::set_camera);
+        app.add_systems(Startup, startup::summon);
     }
 }
 
@@ -26,6 +26,6 @@ pub struct UpdatePlugin;
 impl Plugin for UpdatePlugin {
     //アップデート時に実行されるプラグイン
     fn build(&self, app: &mut App) {
-        app.add_systems(Update, update::move_camera);
+        app.add_systems(Update, update::move_player);
     }
 }
