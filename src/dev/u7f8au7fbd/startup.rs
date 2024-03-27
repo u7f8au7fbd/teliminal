@@ -5,6 +5,9 @@ use bevy::{
 #[derive(Component)]
 pub struct Player;
 
+#[derive(Component)]
+pub struct DebugText;
+
 pub fn summon(
     mut commands: Commands,
     mut meshes: ResMut<Assets<Mesh>>,
@@ -65,6 +68,22 @@ pub fn summon(
                 spatial_scale: Some(SpatialScale::new(0.05)),
                 ..default()
             },
+        },
+    ));
+}
+
+pub fn debug_text(mut commands: Commands) {
+    commands.spawn((
+        DebugText,
+        TextBundle {
+            text: Text::from_section(
+                "Null",
+                TextStyle {
+                    font_size: 60.0,
+                    ..default()
+                },
+            ),
+            ..default()
         },
     ));
 }
