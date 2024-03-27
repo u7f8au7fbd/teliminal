@@ -36,11 +36,6 @@ pub fn move_camera(
         if keyboard_input.pressed(KeyCode::KeyQ) {
             transform.rotation *= Quat::from_rotation_y(0.005);
         }
-        if keyboard_input.pressed(KeyCode::Space) {
-            let rotation = transform.rotation.y;
-            println!("Cos: {:?}", rotation.cos());
-            println!("Sin: {:?}", rotation.sin());
-        }
     }
 }
 
