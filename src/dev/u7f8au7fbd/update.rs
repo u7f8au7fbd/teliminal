@@ -32,10 +32,10 @@ pub fn move_camera(
 ) {
     let sensitivity = 0.005;
     for mut transform in query.iter_mut() {
-        if keyboard_input.pressed(KeyCode::KeyE) {
+        if keyboard_input.pressed(KeyCode::ArrowRight) {
             transform.rotation *= Quat::from_rotation_y(-sensitivity);
         }
-        if keyboard_input.pressed(KeyCode::KeyQ) {
+        if keyboard_input.pressed(KeyCode::ArrowLeft) {
             transform.rotation *= Quat::from_rotation_y(sensitivity);
         }
     }

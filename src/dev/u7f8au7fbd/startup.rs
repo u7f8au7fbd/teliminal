@@ -1,6 +1,7 @@
 use bevy::{
     audio::{PlaybackMode, SpatialScale, Volume},
     prelude::*,
+    scene::ron::de,
 };
 #[derive(Component)]
 pub struct Player;
@@ -33,10 +34,15 @@ pub fn summon(
     });
 
     // camera
+    let default_fov = 70.53_f32.to_radians(); //デフォルトの垂直視野角70.53度(水平視野角は103度)
     commands.spawn((
         Player,
         Camera3dBundle {
             transform: Transform::from_xyz(0.0, 4.0, 40.0),
+            projection: Projection::Perspective(PerspectiveProjection {
+                fov: default_fov,
+                ..default()
+            }),
             ..default()
         },
         FogSettings {
