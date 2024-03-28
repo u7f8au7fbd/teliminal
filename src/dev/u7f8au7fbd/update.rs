@@ -44,14 +44,14 @@ pub fn move_camera(
 pub fn egui_window(mut contexts: EguiContexts) {
     egui::Window::new("Debug").show(contexts.ctx_mut(), |ui| {
         ui.label("Debug Window");
-        ui.separator(); // Add a separator
-                        // Add two sliders
+        ui.separator(); //区切り線
         let mut slider_value1 = 0.5;
-        ui.add(egui::Slider::new(&mut slider_value1, 0.0..=1.0).text("Slider"));
+        ui.add(egui::Slider::new(&mut slider_value1, 0.0..=1.0).text("Slider")); //スライダー
         if ui.button("Button").clicked() {
+            //ボタン
             println!("Button clicked");
         }
         let mut checkbox_value = false;
-        ui.checkbox(&mut checkbox_value, "Checkbox");
+        ui.checkbox(&mut checkbox_value, "Checkbox"); //チェックボックス
     });
 }
