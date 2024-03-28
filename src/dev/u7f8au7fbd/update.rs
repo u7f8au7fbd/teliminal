@@ -8,7 +8,7 @@ pub fn move_player(
     keyboard_input: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
 ) {
-    let speed = 16.;
+    let speed = 12.;
     for mut transform in query.iter_mut() {
         let rotation = transform.rotation;
         if keyboard_input.pressed(KeyCode::KeyW) {

@@ -32,31 +32,44 @@ pub fn summon(
         ..default()
     });
 
-    // camera
+    // Player
     let default_fov = 70.53_f32.to_radians(); //デフォルトの垂直視野角70.53度(水平視野角は103度)
-    commands.spawn((
-        Player,
-        Camera3dBundle {
-            transform: Transform::from_xyz(0.0, 4.0, 40.0),
-            projection: Projection::Perspective(PerspectiveProjection {
-                fov: default_fov,
+    commands
+        .spawn((
+            InheritedVisibility::default(),
+            Player,
+            Camera3dBundle {
+                transform: Transform::from_xyz(0.0, 4.0, 40.0),
+                projection: Projection::Perspective(PerspectiveProjection {
+                    fov: default_fov,
+                    ..default()
+                }),
                 ..default()
-            }),
-            ..default()
-        },
-        FogSettings {
-            color: Color::rgba(0., 0., 0., 1.0),
-            falloff: FogFalloff::Linear {
-                start: 20.0,
-                end: 48.0,
             },
-            ..default()
-        },
-        SpatialListener {
-            left_ear_offset: Vec3::new(0.1, 0.0, 0.0),
-            right_ear_offset: Vec3::new(-0.1, 0.0, 0.0),
-        },
-    ));
+            FogSettings {
+                color: Color::rgba(0., 0., 0., 1.0),
+                falloff: FogFalloff::Linear {
+                    start: 20.0,
+                    end: 48.0,
+                },
+                ..default()
+            },
+            SpatialListener {
+                left_ear_offset: Vec3::new(0.1, 0.0, 0.0),
+                right_ear_offset: Vec3::new(-0.1, 0.0, 0.0),
+            },
+        ))
+        .with_children(|interacter| {
+            interacter.spawn((PbrBundle {
+                mesh: meshes.add(Cuboid::new(0.1, 0.1, 0.1)),
+                material: materials.add(Color::rgb(1., 1., 1.)),
+                transform: Transform {
+                    translation: Vec3::new(0.0, 0.0, -4.0),
+                    ..default()
+                },
+                ..default()
+            },));
+        });
 
     commands.spawn((
         SceneBundle {
@@ -75,6 +88,19 @@ pub fn summon(
             },
         },
     ));
+}
+
+pub fn struct_object(
+    mut commands: Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+) {
+    commands.spawn(PbrBundle {
+        mesh: meshes.add(Cuboid::new(4.0, 8.0, 2.0)),
+        material: materials.add(Color::rgb_u8(128, 128, 128)),
+        transform: Transform::from_xyz(8.0, 0.5, 0.0),
+        ..default()
+    });
 }
 
 pub fn debug_text(mut commands: Commands) {
