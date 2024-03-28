@@ -1,7 +1,7 @@
-use bevy::prelude::*;
-
 use crate::u7f8au7fbd::startup::DebugText;
 use crate::u7f8au7fbd::startup::Player;
+use bevy::prelude::*;
+use bevy_egui::{egui, EguiContexts};
 
 pub fn move_player(
     mut query: Query<&mut Transform, With<Player>>,
@@ -42,8 +42,8 @@ pub fn move_camera(
     }
 }
 
-pub fn debug_update(mut text_query: Query<&mut Text, With<DebugText>>) {
-    for mut text in text_query.iter_mut() {
-        text.sections[0].value = "Debug".to_string();
-    }
+pub fn egui_window(mut contexts: EguiContexts) {
+    egui::Window::new("Debug").show(contexts.ctx_mut(), |ui| {
+        ui.label("Debug Window");
+    });
 }

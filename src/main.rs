@@ -1,6 +1,7 @@
 //#![windows_subsystem = "windows"]
 //Bevy 0.13.1を使用
 use bevy::{diagnostic::FrameTimeDiagnosticsPlugin, prelude::*, window::*};
+use bevy_egui::EguiPlugin;
 use provatheus::*;
 mod dev;
 mod provatheus;
@@ -33,8 +34,9 @@ fn main() {
         .add_plugins((
             ProvatheusPlugin,           //プロヴァテウスプラグイン
             FrameTimeDiagnosticsPlugin, //フレームタイムの診断プラグイン
-            U7f8aU7fbdPlugin,           //u7f8au7fbdプラグイン
-            NatuyadePlugin,             //natuyadeプラグイン
+            EguiPlugin,
+            U7f8aU7fbdPlugin, //u7f8au7fbdプラグイン
+            NatuyadePlugin,   //natuyadeプラグイン
         ))
         //以上は固定
         .run();

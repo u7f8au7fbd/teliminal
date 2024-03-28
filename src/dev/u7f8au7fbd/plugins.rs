@@ -34,7 +34,7 @@ impl Plugin for UpdatePlugin {
             (
                 update::move_player,
                 update::move_camera,
-                update::debug_update,
+                update::egui_window,
             ),
         );
     }
