@@ -17,10 +17,7 @@ pub struct StartupPlugin;
 impl Plugin for StartupPlugin {
     //スタートアップ時に実行されるプラグイン
     fn build(&self, app: &mut App) {
-        app.add_systems(
-            Startup,
-            (startup::summon, startup::debug_text, startup::struct_object),
-        );
+        app.add_systems(Startup, (startup::summon, startup::struct_object));
     }
 }
 

@@ -1,4 +1,3 @@
-use crate::u7f8au7fbd::startup::DebugText;
 use crate::u7f8au7fbd::startup::Player;
 use bevy::prelude::*;
 use bevy_egui::{egui, EguiContexts};
