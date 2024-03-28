@@ -31,7 +31,7 @@ pub fn move_camera(
     keyboard_input: Res<ButtonInput<KeyCode>>,
     time: Res<Time>,
 ) {
-    let sensitivity = 0.005;
+    let sensitivity = 2.;
     for mut transform in query.iter_mut() {
         if keyboard_input.pressed(KeyCode::ArrowRight) {
             transform.rotation *= Quat::from_rotation_y(-sensitivity * time.delta_seconds());
