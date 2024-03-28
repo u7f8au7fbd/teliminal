@@ -12,7 +12,7 @@ fn main() {
                 .set(WindowPlugin {
                     primary_window: Some(Window {
                         title: "Telminal".into(),                                      //タイトル
-                        resolution: (1280.0, 960.0).into(), //ウィンドウサイズ
+                        resolution: (1280.0, 720.0).into(), //ウィンドウサイズ
                         position: WindowPosition::Centered(MonitorSelection::Primary), //ウィンドウの生成座標を中心に設定
                         present_mode: PresentMode::AutoNoVsync,                        //Vsync有効
                         resizable: false, //サイズ変更不可
